@@ -142,7 +142,7 @@ export default function Home() {
             {certificates.map((c, i) => (
               <figure key={i} className="cert">
                 <div className="cert-frame">
-                  {c.image ? <img src={c.image} alt={c.title} /> : <div className="cert-mock"><small>Certificate of Completion</small><b>{c.title}</b><span>{c.issuer}</span><i className="seal" /></div>}
+                  {c.image ? <img src={c.image} alt={c.title} /> : <div className="cert-mock"><small>Certificate of Completion</small><b>{c.title}</b><span>{c.issuer}</span></div>}
                 </div>
                 <figcaption>
                   <strong><P>{c.title}</P></strong>
