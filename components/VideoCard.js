@@ -2,7 +2,7 @@
 import { useState } from "react";
 import P from "./Pending";
 
-export default function VideoCard({ name, area, youtubeId }) {
+export default function VideoCard({ name, area, youtubeId, quote }) {
   const [playing, setPlaying] = useState(false);
   return (
     <figure className="video">
@@ -21,8 +21,8 @@ export default function VideoCard({ name, area, youtubeId }) {
             aria-label={youtubeId ? `Play video from ${name}` : "Video coming soon"}
             style={youtubeId ? { backgroundImage: `linear-gradient(#0006,#0006), url(https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg)` } : undefined}
           >
-            <span className="ring"><svg width="26" height="26" viewBox="0 0 26 26"><path d="M6 3l17 10L6 23z" fill="#FF6445" /></svg></span>
-            {!youtubeId && <small>[Add video]</small>}
+            <span className="ring"><svg width="26" height="26" viewBox="0 0 26 26"><path d="M6 3l17 10L6 23z" style={{ fill: "var(--coral)" }} /></svg></span>
+            {!youtubeId && quote && <em className="vq">“{quote}”</em>}
           </button>
         )}
       </div>

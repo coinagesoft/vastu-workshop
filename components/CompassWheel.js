@@ -10,7 +10,7 @@ export default function CompassWheel({ className = "wheel" }) {
           <line key={a} x1="0" y1="-40" x2="0" y2="-190" transform={`rotate(${a})`} strokeOpacity={a % 90 === 0 ? 1 : 0.55} />
         ))}
       </g>
-      <path d="M0 -190 L9 -148 L0 -138 L-9 -148Z" fill="#FF6445" stroke="none" />
+      <path d="M0 -190 L9 -148 L0 -138 L-9 -148Z" style={{ fill: "var(--coral)" }} stroke="none" />
     </svg>
   );
 }

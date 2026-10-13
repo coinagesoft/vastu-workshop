@@ -5,7 +5,7 @@ import PageBanner from "@/components/PageBanner";
 import IconList, { takeHomeIcons, audienceIcons } from "@/components/IconList";
 import { Arrow } from "@/components/Header";
 import {
-  event, learn, agenda, agendaNote, takeHome, takeHomeNote, audience, quotes, shortCopy, closing,
+  event, learn, agenda, takeHome, audience, quotes, shortCopy, closing,
 } from "@/lib/data";
 
 export const metadata = { title: "Workshop details | DIY Vastu Workshop", description: shortCopy.metaDescription };
@@ -33,7 +33,6 @@ export default function Workshop() {
                 {agenda.map((a) => (<tr key={a.session}><td>{a.session}</td><td>{a.what}</td></tr>))}
               </tbody>
             </table>
-            <p className="muted"><P>{agendaNote}</P></p>
           </div>
         </div>
       </section>
@@ -44,7 +43,6 @@ export default function Workshop() {
             <Eyebrow>Included</Eyebrow>
             <h2>What you <span className="g">take home</span></h2>
             <IconList items={takeHome} icons={takeHomeIcons} />
-            <p className="muted"><P>{takeHomeNote}</P></p>
           </div>
           <div>
             <Eyebrow>Audience</Eyebrow>

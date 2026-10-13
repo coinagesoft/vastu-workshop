@@ -1,8 +1,8 @@
 :root{
-  --blue:#1677FF; --green:#1ECB8F; --coral:#FF6445;
-  --ink:#1B1F2A; --gray:#667085; --line:#E5EAF2; --tint:#F4F8FF; --white:#fff;
-  --grad:linear-gradient(135deg,#1ECB8F 0%,#22A8C9 45%,#1E80F2 100%);
-  --grad2:linear-gradient(90deg,#2B7FFF 0%,#1ECB8F 100%);
+  --blue:#2F86C4; --green:#34B3A8; --coral:#E8743B; --accent-text:#2A83B8; --tint1:#F2F9FE; --tint2:#F1FBF9;
+  --ink:#1B1F2A; --gray:#667085; --line:#E5EAF2; --tint:#F2F9FE; --white:#fff;
+  --grad:linear-gradient(135deg,#5BBDE9 0%,#3B9BD6 50%,#2F86C4 100%);
+  --grad2:linear-gradient(90deg,#2F86C4 0%,#34B3A8 100%);
   --shadow:0 14px 40px rgba(22,60,120,.10);
   --max:1240px;
 }
@@ -16,7 +16,7 @@ h3{font-size:1.25rem;font-weight:600}
 p{max-width:68ch}
 img{max-width:100%;display:block}
 a{color:inherit}
-.g{color:var(--green)}
+.g{color:var(--accent-text)}
 :focus-visible{outline:3px solid var(--coral);outline-offset:3px}
 .skip{position:absolute;left:-999px}.skip:focus{left:12px;top:12px;background:var(--coral);color:#fff;padding:8px 14px;z-index:99;border-radius:8px}
 .wrap{width:min(100% - 40px,var(--max));margin-inline:auto}
@@ -91,7 +91,7 @@ a{color:inherit}
 
 /* sections */
 .section{padding:100px 0}.section.tight{padding:64px 0 110px}
-.tint{background:linear-gradient(180deg,#F4F8FF,#F3FBF8)}
+.tint{background:linear-gradient(180deg,var(--tint1),var(--tint2))}
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:64px}
 
 .about{background:radial-gradient(500px 360px at 8% 60%,#E9F0FF,transparent),radial-gradient(500px 360px at 40% 80%,#E6FAF2,transparent)}
@@ -264,3 +264,53 @@ input:focus,textarea:focus{border-color:var(--blue);outline:none}
 .stat-card b{display:block;font-family:var(--f-head);font-size:2.3rem;line-height:1.1;color:var(--ink)}
 .stat-card span:not(.ico){color:var(--gray)}
 @media (max-width:1000px){.stat-list{margin-left:0;max-width:none}}
+
+/* teacher block */
+.initials{font-family:var(--f-head);font-size:5rem;font-weight:700;color:#fff}
+.portrait:has(.initials){background:var(--grad);border:0}
+.tstats{display:flex;flex-wrap:wrap;gap:14px;margin-top:22px}
+.tstats div{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 20px;box-shadow:var(--shadow);min-width:150px}
+.tstats b{display:block;font-family:var(--f-head);font-size:1.7rem;color:var(--ink);line-height:1.1}
+.tstats span{font-size:.92rem}
+
+/* certificate mock (shown until you add a scan) */
+.cert-mock{position:relative;width:100%;height:100%;display:grid;align-content:center;justify-items:center;gap:6px;padding:14px 18px;text-align:center;color:#5B4510}
+.cert-mock small{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase}
+.cert-mock b{font-family:var(--f-head);font-size:1.12rem;line-height:1.25;color:#3D2F0A}
+.cert-mock span{font-size:.85rem}
+.seal{width:34px;height:34px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#F1D58A,#B9801E);box-shadow:0 0 0 3px #FFFBEF,0 0 0 4px #D9B45A;margin-top:4px}
+
+/* video poster quote */
+.vq{color:#fff;font-style:normal;font-family:var(--f-head);font-size:1.05rem;max-width:26ch;padding:0 20px;text-align:center}
+.play{gap:18px}
+
+/* ===== VASTU COLOUR THEMES - light, fresh, one colour family each =====
+   ishan   North-East: sky blue + aqua-teal, orange CTA   (default)
+   prabhat East sunrise: saffron + amber, red CTA
+   tulsi   North: leaf green + mint, orange CTA
+   jal     North water: aqua + sky, coral CTA              */
+
+html[data-theme="ishan"]{
+  --blue:#2F86C4; --green:#34B3A8; --coral:#E8743B; --accent-text:#2A83B8;
+  --tint1:#F2F9FE; --tint2:#F1FBF9;
+  --grad:linear-gradient(135deg,#5BBDE9 0%,#3B9BD6 50%,#2F86C4 100%);
+  --grad2:linear-gradient(90deg,#2F86C4 0%,#34B3A8 100%);
+}
+html[data-theme="prabhat"]{
+  --blue:#E07B1F; --green:#D9961E; --coral:#D6452F; --accent-text:#C96A12;
+  --tint1:#FFF8EE; --tint2:#FFF4E3;
+  --grad:linear-gradient(135deg,#F9B24E 0%,#EE9025 50%,#E07B1F 100%);
+  --grad2:linear-gradient(90deg,#E07B1F 0%,#D9961E 100%);
+}
+html[data-theme="tulsi"]{
+  --blue:#2F9E67; --green:#4DB38C; --coral:#E8743B; --accent-text:#278A58;
+  --tint1:#F2FBF5; --tint2:#EFFAF6;
+  --grad:linear-gradient(135deg,#6CCB96 0%,#45B47C 50%,#2F9E67 100%);
+  --grad2:linear-gradient(90deg,#2F9E67 0%,#4DB38C 100%);
+}
+html[data-theme="jal"]{
+  --blue:#1E9EA8; --green:#3FA7D6; --coral:#EF7B52; --accent-text:#198A93;
+  --tint1:#F0FBFC; --tint2:#F0F7FD;
+  --grad:linear-gradient(135deg,#6AD3D6 0%,#34B7BD 50%,#1E9EA8 100%);
+  --grad2:linear-gradient(90deg,#1E9EA8 0%,#3FA7D6 100%);
+}

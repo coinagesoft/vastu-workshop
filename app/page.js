@@ -32,7 +32,7 @@ const statIcons = [
 function Eyebrow({ children }) { return <p className="eyebrow"><i />{children}</p>; }
 function Squiggle() {
   return (
-    <svg className="squiggle" width="110" height="46" viewBox="0 0 110 46" fill="none" stroke="#1ECB8F" strokeWidth="9" strokeLinecap="round" aria-hidden="true">
+    <svg className="squiggle" width="110" height="46" viewBox="0 0 110 46" fill="none" style={{ stroke: "var(--green)" }} strokeWidth="9" strokeLinecap="round" aria-hidden="true">
       <path d="M6 30c6-24 14-24 18-4s12 20 20-6 12-24 20-4 12 20 20-4" />
     </svg>
   );
@@ -120,13 +120,15 @@ export default function Home() {
       <section className="section tint">
         <div className="wrap teacher">
           <div className="portrait">
-            {teacher.photo ? <img src={teacher.photo} alt={event.teacher} /> : <span>[Photo]</span>}
+            {teacher.photo ? <img src={teacher.photo} alt={event.teacher} /> : <span className="initials">AS</span>}
           </div>
           <div>
             <Eyebrow>Meet your teacher</Eyebrow>
             <h2>{event.teacher}</h2>
             <p className="body-lg">{teacher.bio}</p>
-            <p className="muted"><P>{teacher.note}</P></p>
+            <div className="tstats">
+              {teacher.stats.map((s) => (<div key={s.l}><b>{s.n}</b><span>{s.l}</span></div>))}
+            </div>
           </div>
         </div>
       </section>
@@ -140,7 +142,7 @@ export default function Home() {
             {certificates.map((c, i) => (
               <figure key={i} className="cert">
                 <div className="cert-frame">
-                  {c.image ? <img src={c.image} alt={c.title} /> : <span>[Add certificate image]</span>}
+                  {c.image ? <img src={c.image} alt={c.title} /> : <div className="cert-mock"><small>Certificate of Completion</small><b>{c.title}</b><span>{c.issuer}</span><i className="seal" /></div>}
                 </div>
                 <figcaption>
                   <strong><P>{c.title}</P></strong>
