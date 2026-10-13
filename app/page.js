@@ -1,0 +1,198 @@
+import Link from "next/link";
+import Countdown from "@/components/Countdown";
+import CompassWheel from "@/components/CompassWheel";
+import VideoCard from "@/components/VideoCard";
+import P from "@/components/Pending";
+import { Arrow } from "@/components/Header";
+import {
+  event, problem, learn, agenda, agendaNote, teacher, certificates,
+  videoTestimonials, tickets, depositText, closing, inr,
+} from "@/lib/data";
+
+const wa = process.env.NEXT_PUBLIC_WHATSAPP;
+const waHref = wa ? `https://wa.me/${wa}?text=${encodeURIComponent(event.whatsappText)}` : "#";
+
+const svg = (children) => (
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{children}</svg>
+);
+const learnIcons = [
+  svg(<><circle cx="12" cy="12" r="9" /><path d="M15.5 8.5l-2 5-5 2 2-5z" /></>),
+  svg(<><rect x="4" y="4" width="7" height="7" rx="1" /><rect x="13" y="4" width="7" height="7" rx="1" /><rect x="4" y="13" width="7" height="7" rx="1" /><rect x="13" y="13" width="7" height="7" rx="1" /></>),
+  svg(<><circle cx="11" cy="11" r="6" /><path d="M20 20l-4.2-4.2" /></>),
+  svg(<><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z" /><path d="M9 12l2 2 4-4" /></>),
+  svg(<><path d="M4 11l8-7 8 7" /><path d="M6 10v10h12V10" /><path d="M10 20v-5h4v5" /></>),
+];
+
+const statIcons = [
+  svg(<><rect x="4" y="5" width="16" height="15" rx="2" /><path d="M4 10h16M8 3v4M16 3v4" /></>),
+  svg(<><rect x="4" y="4" width="7" height="7" rx="1" /><rect x="13" y="4" width="7" height="7" rx="1" /><rect x="4" y="13" width="7" height="7" rx="1" /><rect x="13" y="13" width="7" height="7" rx="1" /></>),
+  svg(<path d="M12 3c3 4 6 6 6 10a6 6 0 01-12 0c0-4 3-6 6-10z" />),
+];
+
+function Eyebrow({ children }) { return <p className="eyebrow"><i />{children}</p>; }
+function Squiggle() {
+  return (
+    <svg className="squiggle" width="110" height="46" viewBox="0 0 110 46" fill="none" stroke="#1ECB8F" strokeWidth="9" strokeLinecap="round" aria-hidden="true">
+      <path d="M6 30c6-24 14-24 18-4s12 20 20-6 12-24 20-4 12 20 20-4" />
+    </svg>
+  );
+}
+
+export default function Home() {
+  return (
+    <>
+      {/* HERO */}
+      <section className="hero">
+        <div className="wrap hero-grid">
+          <div>
+            <p className="eyebrow light"><i /><span>{event.dateLabel} | <P>{event.venue}</P> | <P>{event.time}</P></span></p>
+            <h1>{event.headline}<br />{event.headline2}</h1>
+            <Countdown to={event.start} />
+            <p className="lead">{event.subtitle}</p>
+            <div className="actions">
+              <Link href="/book" className="btn coral">Reserve My Seat: {inr(9999)} <Arrow /></Link>
+              <a href={waHref} className="btn white" target="_blank" rel="noopener noreferrer">Chat on WhatsApp</a>
+            </div>
+            <p className="note">Limited to <P>{event.seats}</P> seats. {event.bring}</p>
+          </div>
+
+          <div className="hero-art">
+            <div className="blob"><CompassWheel className="wheel" /></div>
+          </div>
+        </div>
+      </section>
+
+      {/* ABOUT / PROBLEM */}
+      <section className="section about">
+        <div className="wrap about-grid">
+          <div>
+            <Eyebrow>The problem</Eyebrow>
+            <h2>What if you could <span className="g">understand it yourself?</span></h2>
+            <p className="body-lg">{problem.text}</p>
+            <Link href="/workshop" className="btn blue">See what happens on the day <Arrow /></Link>
+          </div>
+          <div className="stat-list">
+            {[
+              ["1", "day, hands-on", statIcons[0], "green"],
+              ["16", "zones explained", statIcons[1], "blue"],
+              ["5", "elements in your space", statIcons[2], "coral"],
+            ].map(([n, label, icon, color]) => (
+              <div key={label} className="stat-card">
+                <span className={`ico ${color}`}>{icon}</span>
+                <div><b>{n}</b><span>{label}</span></div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* LEARN */}
+      <section className="section tint">
+        <div className="wrap">
+          <p className="eyebrow c"><i />What you&apos;ll learn</p>
+          <h2 className="center">In one day, you will <span className="g">learn how to</span></h2>
+          <div className="why">
+            {learn.map((l, i) => (
+              <div key={l} className="why-card">
+                <span className={`ico ${["green", "blue", "coral"][i % 3]}`}>{learnIcons[i]}</span>
+                <p>{l}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* AGENDA */}
+      <section className="section">
+        <div className="wrap">
+          <Eyebrow>Schedule</Eyebrow>
+          <h2>How the <span className="g">day works</span></h2>
+          <ol className="timeline">
+            {agenda.map((a) => (
+              <li key={a.session}><h3>{a.session}</h3><p>{a.what}</p></li>
+            ))}
+          </ol>
+          <p className="muted"><P>{agendaNote}</P></p>
+        </div>
+      </section>
+
+      {/* TEACHER */}
+      <section className="section tint">
+        <div className="wrap teacher">
+          <div className="portrait">
+            {teacher.photo ? <img src={teacher.photo} alt={event.teacher} /> : <span>[Photo]</span>}
+          </div>
+          <div>
+            <Eyebrow>Meet your teacher</Eyebrow>
+            <h2>{event.teacher}</h2>
+            <p className="body-lg">{teacher.bio}</p>
+            <p className="muted"><P>{teacher.note}</P></p>
+          </div>
+        </div>
+      </section>
+
+      {/* CERTIFICATES */}
+      <section id="certificates" className="section">
+        <div className="wrap">
+          <Eyebrow>Credentials</Eyebrow>
+          <h2>Certificates and <span className="g">recognition</span></h2>
+          <div className="certs">
+            {certificates.map((c, i) => (
+              <figure key={i} className="cert">
+                <div className="cert-frame">
+                  {c.image ? <img src={c.image} alt={c.title} /> : <span>[Add certificate image]</span>}
+                </div>
+                <figcaption>
+                  <strong><P>{c.title}</P></strong>
+                  <span><P>{`${c.issuer}, ${c.year}`}</P></span>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* VIDEO TESTIMONIALS */}
+      <section id="testimonials" className="section tint">
+        <div className="wrap">
+          <Eyebrow>Video testimonials</Eyebrow>
+          <h2>Hear it from people <span className="g">who learned it</span></h2>
+          <div className="videos">
+            {videoTestimonials.map((v, i) => (<VideoCard key={i} {...v} />))}
+          </div>
+        </div>
+      </section>
+
+      {/* PRICING */}
+      <section className="section">
+        <div className="wrap">
+          <Eyebrow>Pricing</Eyebrow>
+          <h2>Choose your <span className="g">ticket</span></h2>
+          <div className="tickets">
+            {tickets.map((t) => (
+              <div key={t.id} className={`ticket ${t.id === "regular" ? "feature" : ""}`}>
+                <h3>{t.name}</h3>
+                <p className="price">{inr(t.price)}</p>
+                <p className="muted"><P>{t.note || "1 person"}</P></p>
+                <Link href="/book" className={`btn full ${t.id === "regular" ? "coral" : "blue"}`}>Reserve My Seat <Arrow /></Link>
+              </div>
+            ))}
+          </div>
+          <p className="muted center">{depositText}</p>
+        </div>
+      </section>
+
+      {/* CLOSING CTA */}
+      <section className="cta">
+        <div className="wrap narrow center">
+          <p className="note"><P>{closing.line1}</P></p>
+          <h2>{closing.line2}</h2>
+          <div className="actions center">
+            <Link href="/book" className="btn coral">Reserve My Seat <Arrow /></Link>
+            <a href={waHref} className="btn white" target="_blank" rel="noopener noreferrer">Ask a Question on WhatsApp</a>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+}
