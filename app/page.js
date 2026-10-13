@@ -2,6 +2,7 @@ import Link from "next/link";
 import Countdown from "@/components/Countdown";
 import CompassWheel from "@/components/CompassWheel";
 import VideoCard from "@/components/VideoCard";
+import * as V from "@/components/VastuIcons";
 import P from "@/components/Pending";
 import { Arrow } from "@/components/Header";
 import {
@@ -12,22 +13,8 @@ import {
 const wa = process.env.NEXT_PUBLIC_WHATSAPP;
 const waHref = wa ? `https://wa.me/${wa}?text=${encodeURIComponent(event.whatsappText)}` : "#";
 
-const svg = (children) => (
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{children}</svg>
-);
-const learnIcons = [
-  svg(<><circle cx="12" cy="12" r="9" /><path d="M15.5 8.5l-2 5-5 2 2-5z" /></>),
-  svg(<><rect x="4" y="4" width="7" height="7" rx="1" /><rect x="13" y="4" width="7" height="7" rx="1" /><rect x="4" y="13" width="7" height="7" rx="1" /><rect x="13" y="13" width="7" height="7" rx="1" /></>),
-  svg(<><circle cx="11" cy="11" r="6" /><path d="M20 20l-4.2-4.2" /></>),
-  svg(<><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z" /><path d="M9 12l2 2 4-4" /></>),
-  svg(<><path d="M4 11l8-7 8 7" /><path d="M6 10v10h12V10" /><path d="M10 20v-5h4v5" /></>),
-];
-
-const statIcons = [
-  svg(<><rect x="4" y="5" width="16" height="15" rx="2" /><path d="M4 10h16M8 3v4M16 3v4" /></>),
-  svg(<><rect x="4" y="4" width="7" height="7" rx="1" /><rect x="13" y="4" width="7" height="7" rx="1" /><rect x="4" y="13" width="7" height="7" rx="1" /><rect x="13" y="13" width="7" height="7" rx="1" /></>),
-  svg(<path d="M12 3c3 4 6 6 6 10a6 6 0 01-12 0c0-4 3-6 6-10z" />),
-];
+const learnIcons = [V.compass(), V.elements5(), V.defect(), V.diya(), V.houseCheck()];
+const statIcons = [V.sunrise(), V.zones16(), V.elements5()];
 
 function Eyebrow({ children }) { return <p className="eyebrow"><i />{children}</p>; }
 function Squiggle() {
@@ -120,7 +107,7 @@ export default function Home() {
       <section className="section tint">
         <div className="wrap teacher">
           <div className="portrait">
-            {teacher.photo ? <img src={teacher.photo} alt={event.teacher} /> : <span className="initials">AS</span>}
+            {(teacher.photo || "/Shilratna-shilwant.webp") ? <img src={teacher.photo || "/Shilratna-shilwant.webp"} alt={event.teacher} /> : <span className="initials">AS</span>}
           </div>
           <div>
             <Eyebrow>Meet your teacher</Eyebrow>
@@ -142,7 +129,7 @@ export default function Home() {
             {certificates.map((c, i) => (
               <figure key={i} className="cert">
                 <div className="cert-frame">
-                  {c.image ? <img src={c.image} alt={c.title} /> : <div className="cert-mock"><small>Certificate of Completion</small><b>{c.title}</b><span>{c.issuer}</span></div>}
+                  {c.image ? <img src={c.image} alt={c.title} /> : <div className="cert-mock"><small>Certificate of Completion</small><b>{c.title}</b><span>{c.issuer}</span><i className="seal" /></div>}
                 </div>
                 <figcaption>
                   <strong><P>{c.title}</P></strong>
@@ -166,6 +153,25 @@ export default function Home() {
       </section>
 
       {/* PRICING */}
+      {/* COMPLETION CERTIFICATE */}
+      <section className="section about">
+        <div className="wrap two-col cert-show">
+          <div>
+            <Eyebrow>Your certificate</Eyebrow>
+            <h2>Leave with a <span className="g">certificate of participation</span></h2>
+            <p className="body-lg">Every participant receives a certificate for completing the One Day Practical Home Vastu Workshop, signed by {event.teacher}.</p>
+            <ul className="learn small">
+              <li>Awarded to each participant at the end of the workshop</li>
+              <li>Issued in your name, with the workshop date and venue</li>
+              <li>Yours to keep, frame or share</li>
+            </ul>
+          </div>
+          <figure className="cert-img">
+            <img src="/completion%20certificate.jpeg" alt="Vedratnna certificate of participation, One Day Practical Home Vastu Workshop" loading="lazy" />
+          </figure>
+        </div>
+      </section>
+
       <section className="section">
         <div className="wrap">
           <Eyebrow>Pricing</Eyebrow>
@@ -174,7 +180,9 @@ export default function Home() {
             {tickets.map((t) => (
               <div key={t.id} className={`ticket ${t.id === "regular" ? "feature" : ""}`}>
                 <h3>{t.name}</h3>
+                <p className="mrp"><s>{inr(t.mrp)}</s></p>
                 <p className="price">{inr(t.price)}</p>
+                <p className="save-chip">Save {inr(t.mrp - t.price)}</p>
                 <p className="muted"><P>{t.note || "1 person"}</P></p>
                 <Link href="/book" className={`btn full ${t.id === "regular" ? "coral" : "blue"}`}>Reserve My Seat <Arrow /></Link>
               </div>

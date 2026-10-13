@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import { tickets, deposit, depositText, event, inr } from "@/lib/data";
 import P from "./Pending";
 
-const EARLY_END = new Date("2026-10-19T00:00:00+05:30").getTime();
+// Early bird stays open through 20 Oct (ends at midnight IST)
+const EARLY_END = new Date("2026-10-21T00:00:00+05:30").getTime();
 
 export default function BookingForm() {
   const [earlyOpen, setEarlyOpen] = useState(true);
@@ -66,7 +67,7 @@ export default function BookingForm() {
               <label key={x.id} className={`pick ${ticket === x.id ? "on" : ""} ${disabled ? "off" : ""}`}>
                 <input type="radio" name="ticket" value={x.id} checked={ticket === x.id} disabled={disabled} onChange={() => setTicket(x.id)} />
                 <span className="pn">{x.name}</span>
-                <span className="pp">{inr(x.price)}</span>
+                <span className="pp"><s className="pp-old">{inr(x.mrp)}</s> {inr(x.price)}</span>
                 <span className="pm"><P>{disabled ? "Early bird has ended" : x.note || "1 person"}</P></span>
               </label>
             );

@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+const logo = "/vedratna-logo.webp";
 
 const links = [
   { href: "/", label: "Home" },
@@ -26,12 +27,7 @@ export default function Header() {
     <header className="site-header">
       <div className="wrap bar">
         <Link href="/" className="brand" onClick={() => setOpen(false)}>
-          <svg width="34" height="30" viewBox="0 0 34 30" aria-hidden="true">
-            <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style={{ stopColor: "var(--blue)" }} /><stop offset="1" style={{ stopColor: "var(--green)" }} /></linearGradient></defs>
-            <path d="M0 0h34v14C34 23 27 30 18 30H0z" fill="url(#lg)" />
-            <path d="M17 6l3 9-3 9-3-9z" fill="#fff" />
-          </svg>
-          <b>DIY<em>Vastu</em></b>
+          <img src={logo} alt="Vedratna" className="brand-logo" />
         </Link>
         <button className="menu-btn" aria-expanded={open} aria-label="Menu" onClick={() => setOpen(!open)}>
           <span /><span /><span />

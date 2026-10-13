@@ -4,10 +4,12 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { shortCopy, theme } from "@/lib/data";
 
+const logo = "/vedratna-logo.webp";
+
 const outfit = Outfit({ subsets: ["latin"], variable: "--f-head", display: "swap" });
 const dm = DM_Sans({ subsets: ["latin"], variable: "--f-body", display: "swap" });
 
-export const metadata = { title: shortCopy.metaTitle, description: shortCopy.metaDescription };
+export const metadata = { title: shortCopy.metaTitle, description: shortCopy.metaDescription, icons: { icon: logo } };
 
 export default function RootLayout({ children }) {
   return (

@@ -314,3 +314,20 @@ html[data-theme="jal"]{
   --grad:linear-gradient(135deg,#6AD3D6 0%,#34B7BD 50%,#1E9EA8 100%);
   --grad2:linear-gradient(90deg,#1E9EA8 0%,#3FA7D6 100%);
 }
+
+/* logo + teacher photo */
+.brand-logo{height:60px;width:auto;max-width:220px;object-fit:contain}
+@media (max-width:1000px){.brand-logo{height:46px}}
+.portrait:has(img){border:0}
+
+/* strike-through price + savings */
+.ticket .mrp{margin:6px auto -4px;font-size:1.35rem;color:var(--gray)}
+.ticket .mrp s{text-decoration-thickness:2px;text-decoration-color:var(--coral)}
+.ticket .save-chip{justify-self:center;margin:2px auto 0;background:color-mix(in srgb,var(--green) 16%,#fff);color:var(--accent-text);font-size:.92rem;font-weight:600;padding:3px 14px;border-radius:99px}
+.pp-old{font-family:var(--f-body),system-ui,sans-serif;font-size:.95rem;font-weight:400;color:var(--gray);text-decoration-color:var(--coral);margin-right:4px}
+
+/* completion certificate section */
+.cert-show{align-items:center}
+.cert-img{margin:0}
+.cert-img img{width:100%;height:auto;border-radius:10px;border:1px solid var(--line);box-shadow:var(--shadow);transform:rotate(-1.2deg)}
+@media (max-width:1000px){.cert-img img{transform:none}}

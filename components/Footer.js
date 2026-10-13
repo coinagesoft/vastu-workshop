@@ -4,6 +4,8 @@
 import Link from "next/link";
 import { useState } from "react";
 import { event, shortCopy } from "@/lib/data";
+
+const logo = "/vedratna-logo-white.webp";
 import P from "./Pending";
 
 const wa = process.env.NEXT_PUBLIC_WHATSAPP;
@@ -11,9 +13,9 @@ const waHref = `https://wa.me/${wa || "919876543210"}?text=${encodeURIComponent(
 
 // Replace the "#" links with your real social profiles.
 const socials = [
-  { label: "Facebook", href: "https://www.facebook.com/", d: "M14 8h2V5h-2.2C11.4 5 10 6.5 10 8.7V10H8v3h2v7h3v-7h2.2l.5-3H13V8.9c0-.6.3-.9 1-.9z" },
-  { label: "Instagram", href: "https://www.instagram.com/", d: "M8 4h8a4 4 0 014 4v8a4 4 0 01-4 4H8a4 4 0 01-4-4V8a4 4 0 014-4zm4 4.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7zm4.6-1.6a.9.9 0 100 1.8.9.9 0 000-1.8z" },
-  { label: "YouTube", href: "https://www.youtube.com/", d: "M20.5 8.2a2.4 2.4 0 00-1.7-1.7C17.3 6 12 6 12 6s-5.3 0-6.8.5A2.4 2.4 0 003.5 8.2C3 9.7 3 12 3 12s0 2.3.5 3.8a2.4 2.4 0 001.7 1.7C6.7 18 12 18 12 18s5.3 0 6.8-.5a2.4 2.4 0 001.7-1.7c.5-1.5.5-3.8.5-3.8s0-2.3-.5-3.8zM10.2 14.6V9.4l4.5 2.6z" },
+  { label: "Facebook", href: "https://www.facebook.com/people/Vedratnna-AstroVastu/100080095403053/", d: "M14 8h2V5h-2.2C11.4 5 10 6.5 10 8.7V10H8v3h2v7h3v-7h2.2l.5-3H13V8.9c0-.6.3-.9 1-.9z" },
+  { label: "Instagram", href: "https://www.instagram.com/vedratnavastu", d: "M8 4h8a4 4 0 014 4v8a4 4 0 01-4 4H8a4 4 0 01-4-4V8a4 4 0 014-4zm4 4.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7zm4.6-1.6a.9.9 0 100 1.8.9.9 0 000-1.8z" },
+  { label: "YouTube", href: "https://www.youtube.com/@vedratnavastu9231", d: "M20.5 8.2a2.4 2.4 0 00-1.7-1.7C17.3 6 12 6 12 6s-5.3 0-6.8.5A2.4 2.4 0 003.5 8.2C3 9.7 3 12 3 12s0 2.3.5 3.8a2.4 2.4 0 001.7 1.7C6.7 18 12 18 12 18s5.3 0 6.8-.5a2.4 2.4 0 001.7-1.7c.5-1.5.5-3.8.5-3.8s0-2.3-.5-3.8zM10.2 14.6V9.4l4.5 2.6z" },
   { label: "WhatsApp", href: waHref, d: "M12 4a8 8 0 00-6.9 12L4 20l4.1-1.1A8 8 0 1012 4zm4.2 11.2c-.2.5-1.1 1-1.6 1-.4.1-.9.1-2.9-.7-2.4-1-3.9-3.4-4-3.6-.1-.2-1-1.3-1-2.5s.6-1.8.9-2c.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 1.9c.1.2.1.4 0 .5l-.3.5-.4.4c-.1.2-.3.3-.1.6.2.3.7 1.2 1.5 1.9 1 .9 1.9 1.2 2.2 1.3.3.1.4.1.6-.1l.8-.9c.2-.2.4-.2.6-.1l1.8.9c.2.1.4.2.4.3.1.2.1.8-.1 1.3z" },
 ];
 
@@ -22,6 +24,7 @@ const css = `
 .fx::before{content:"";position:absolute;inset:0;opacity:.35;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='500' fill='none' stroke='white' stroke-opacity='.22'%3E%3Cpath d='M-20 380C150 250 280 470 460 330S720 200 920 300'/%3E%3Cpath d='M-20 330C150 200 280 420 460 280S720 150 920 250'/%3E%3Cpath d='M-20 280C150 150 280 370 460 230S720 100 920 200'/%3E%3C/svg%3E");background-size:cover}
 .fx-in{position:relative;width:min(100% - 40px,1100px);margin-inline:auto;padding:64px 0 40px}
 .fx-top{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-bottom:30px;border-bottom:1px solid #ffffff40}
+.fx-logo img{height:64px;width:auto;max-width:100%}
 .fx-logo{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-family:var(--f-head),system-ui,sans-serif;font-weight:700;font-size:1.7rem;letter-spacing:-.02em}
 .fx-follow{display:flex;align-items:center;gap:12px;font-weight:600;font-size:.95rem}
 .fx-soc{display:flex;gap:8px}
@@ -64,11 +67,7 @@ export default function Footer() {
       <div className="fx-in">
         <div className="fx-top">
           <Link href="/" className="fx-logo">
-            <svg width="30" height="26" viewBox="0 0 34 30" aria-hidden="true">
-              <path d="M0 0h34v14C34 23 27 30 18 30H0z" fill="#fff" />
-              <path d="M17 6l3 9-3 9-3-9z" style={{ fill: "var(--blue)" }} />
-            </svg>
-            DIYVastu
+            <img src={logo} alt="Vedratna" />
           </Link>
           <div className="fx-follow">
             <span>Follow Us</span>
