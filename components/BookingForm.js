@@ -13,6 +13,7 @@ export default function BookingForm() {
   const [form, setForm] = useState({ name: "", email: "", phone: "", guest: "", city: "", note: "" });
   const [status, setStatus] = useState("idle");
   const [error, setError] = useState("");
+  const [paymentId, setPaymentId] = useState("");
 
   useEffect(() => {
     const open = Date.now() < EARLY_END;
@@ -25,19 +26,70 @@ export default function BookingForm() {
   const balance = t.price - payNow;
   const set = (k) => (e) => setForm({ ...form, [k]: e.target.value });
 
+  function loadCheckout() {
+    return new Promise((resolve, reject) => {
+      if (window.Razorpay) return resolve();
+      const el = document.createElement("script");
+      el.src = "https://checkout.razorpay.com/v1/checkout.js";
+      el.onload = resolve;
+      el.onerror = () => reject(new Error("Could not load the payment window. Check your connection and try again."));
+      document.body.appendChild(el);
+    });
+  }
+
   async function submit(e) {
     e.preventDefault();
     setError("");
     setStatus("loading");
     try {
-      const res = await fetch("/api/book", {
+      await loadCheckout();
+      const res = await fetch("/api/razorpay/order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, ticket: t.id, payNow, total: t.price }),
+        body: JSON.stringify({ ...form, ticket: t.id, pay }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Something went wrong.");
-      setStatus("done");
+
+      const rzp = new window.Razorpay({
+        key: data.keyId,
+        amount: data.amount,
+        currency: data.currency,
+        ...(data.orderId ? { order_id: data.orderId } : {}),
+        name: "DIY Vastu Workshop",
+        description: `${t.name} ticket, ${event.dateLabel}`,
+        prefill: { name: form.name, email: form.email, contact: form.phone },
+        notes: { ticket: t.id },
+        theme: { color: "#e8590c" },
+        modal: { ondismiss: () => setStatus("idle") },
+        handler: async (r) => {
+          if (!data.orderId) {
+            // test-only mode: no secret, so no signature check
+            setPaymentId(r.razorpay_payment_id);
+            setStatus("done");
+            return;
+          }
+          try {
+            const v = await fetch("/api/razorpay/verify", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(r),
+            });
+            const vd = await v.json();
+            if (!v.ok) throw new Error(vd.error || "Payment could not be verified.");
+            setPaymentId(r.razorpay_payment_id);
+            setStatus("done");
+          } catch (err) {
+            setError(`${err.message} If money was deducted, contact us with payment ID ${r.razorpay_payment_id}.`);
+            setStatus("idle");
+          }
+        },
+      });
+      rzp.on("payment.failed", (resp) => {
+        setError(resp?.error?.description || "Payment failed. Please try again.");
+        setStatus("idle");
+      });
+      rzp.open();
     } catch (err) {
       setError(err.message);
       setStatus("idle");
@@ -46,11 +98,11 @@ export default function BookingForm() {
 
   if (status === "done") {
     const wa = process.env.NEXT_PUBLIC_WHATSAPP;
-    const msg = `Hi, I'm ${form.name}. I reserved a ${t.name} ticket (${inr(t.price)}) for the DIY Vastu Workshop on 1 November. Please share the payment details.`;
+    const msg = `Hi, I'm ${form.name}. I booked a ${t.name} ticket (${inr(t.price)}) and paid ${inr(payNow)} for the DIY Vastu Workshop on 1 November. My payment ID is ${paymentId}.`;
     return (
       <div className="panel done">
-        <h2>Seat request received</h2>
-        <p>Thank you, {form.name}. We will contact you on {form.phone} to confirm your seat and share the payment link for {inr(payNow)}.</p>
+        <h2>Payment successful. Your seat is booked!</h2>
+        <p>Thank you, {form.name}. We received {inr(payNow)} (payment ID: {paymentId}).{balance > 0 ? ` The balance of ${inr(balance)} can be paid later.` : ""} We will contact you on {form.phone} with the final details.</p>
         {wa && <a className="btn coral" href={`https://wa.me/${wa}?text=${encodeURIComponent(msg)}`} target="_blank" rel="noopener noreferrer">Confirm on WhatsApp</a>}
       </div>
     );
@@ -113,7 +165,7 @@ export default function BookingForm() {
           {balance > 0 && (<><dt>Balance</dt><dd>{inr(balance)}</dd></>)}
         </dl>
         {error && <p className="error" role="alert">{error}</p>}
-        <button className="btn coral full" disabled={status === "loading"}>{status === "loading" ? "Sending…" : "Reserve my seat"}</button>
+        <button className="btn coral full" disabled={status === "loading"}>{status === "loading" ? "Opening payment…" : `Pay ${inr(payNow)} & reserve`}</button>
         <p className="muted small">Limited to <P>{event.seats}</P> seats. {event.bring}</p>
       </aside>
     </form>
