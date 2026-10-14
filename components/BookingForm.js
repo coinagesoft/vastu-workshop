@@ -64,7 +64,12 @@ export default function BookingForm() {
         modal: { ondismiss: () => setStatus("idle") },
         handler: async (r) => {
           if (!data.orderId) {
-            // test-only mode: no secret, so no signature check
+            // test-only mode: no secret, so no signature check. Local testing sends the confirmation here.
+            fetch("/api/razorpay/confirm-test", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ ...form, ticket: t.id, pay, paymentId: r.razorpay_payment_id }),
+            }).catch(() => {});
             setPaymentId(r.razorpay_payment_id);
             setStatus("done");
             return;
