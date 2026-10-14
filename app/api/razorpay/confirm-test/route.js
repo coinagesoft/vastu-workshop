@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { tickets, deposit } from "@/lib/data";
 import { sendConfirmation } from "@/lib/notify";
+import { markPaid } from "@/lib/sheets";
 
 export const runtime = "nodejs";
 
@@ -16,6 +17,17 @@ export async function POST(req) {
     const t = tickets.find((x) => x.id === b.ticket);
     if (!t || !b.name || !b.paymentId) return NextResponse.json({ error: "Bad request." }, { status: 400 });
     const paidNow = b.pay === "full" ? t.price : Math.min(deposit, t.price);
+    // Local testing: store the booking so it appears in the admin panel.
+    try {
+      await markPaid({
+        orderId: null,
+        paymentId: String(b.paymentId),
+        name: b.name, email: b.email, phone: b.phone, city: b.city, guest: b.guest, note: b.note,
+        ticket: t.id, total: t.price, paidNow, balance: t.price - paidNow,
+      });
+    } catch (e) {
+      console.error("Sheet markPaid (test) error:", e.message);
+    }
     await sendConfirmation({
       name: String(b.name).slice(0, 100),
       email: String(b.email || ""),

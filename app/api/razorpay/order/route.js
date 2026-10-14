@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { tickets, deposit } from "@/lib/data";
 import { rzpRequest, razorpayKeys } from "@/lib/razorpay";
+import { savePending } from "@/lib/sheets";
 
 export const runtime = "nodejs";
 
@@ -62,6 +63,18 @@ export async function POST(req) {
         },
       }),
     });
+
+    // Save the registration as "pending" so it shows in the admin panel even if payment is not completed.
+    // A database problem must never block the payment, so it is only logged.
+    try {
+      await savePending({
+        orderId: order.id,
+        name: b.name, email: b.email, phone: b.phone, city: b.city, guest: b.guest, note: b.note,
+        ticket: t.id, total: t.price, paidNow: payNow, balance: t.price - payNow,
+      });
+    } catch (e) {
+      console.error("Sheet savePending error:", e.message);
+    }
 
     return NextResponse.json({
       keyId,

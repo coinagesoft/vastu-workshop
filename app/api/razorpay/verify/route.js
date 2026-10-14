@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { rzpRequest, verifySignature } from "@/lib/razorpay";
 import { sendConfirmation } from "@/lib/notify";
+import { markPaid } from "@/lib/sheets";
 
 export const runtime = "nodejs";
 
@@ -18,8 +19,21 @@ export async function POST(req) {
     // Trusted booking details come from the order we created, not from the browser.
     const order = await rzpRequest(`/orders/${razorpay_order_id}`);
 
-    // TODO: store this booking (email, Google Sheet, CRM, database) before going live.
+    // The console line stays as a backup record in case the database is down.
     console.log("PAID booking:", { paymentId: razorpay_payment_id, orderId: razorpay_order_id, ...order.notes });
+
+    // Store the booking in the Google Sheet (the admin panel reads from here).
+    try {
+      const n = order.notes || {};
+      await markPaid({
+        orderId: razorpay_order_id,
+        paymentId: razorpay_payment_id,
+        name: n.name, email: n.email, phone: n.phone, city: n.city, guest: n.guest, note: n.note,
+        ticket: n.ticket, total: n.total, paidNow: n.paid_now, balance: n.balance,
+      });
+    } catch (e) {
+      console.error("Sheet markPaid error:", e.message);
+    }
 
     // Confirmation by SMS / email / WhatsApp (channels without env settings are skipped).
     await sendConfirmation({ ...order.notes, paymentId: razorpay_payment_id }).catch((e) =>
