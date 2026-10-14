@@ -5,11 +5,20 @@ import { markPaid } from "@/lib/sheets";
 
 export const runtime = "nodejs";
 
-// LOCAL TESTING ONLY. Used when RAZORPAY_KEY_SECRET is not set, so the payment cannot be
-// verified. It is disabled in production and whenever a secret exists, because anyone could
-// otherwise call it and make your MSG91 account send messages.
+// TEST-ONLY confirmation, used while RAZORPAY_KEY_SECRET is not set (payment cannot be verified).
+// - On your own computer (npm run dev) it is always available.
+// - On Vercel it stays OFF unless you set ALLOW_TEST_CONFIRM=true AND the Razorpay key is a test key
+//   (rzp_test_...). It is never available once RAZORPAY_KEY_SECRET is set.
+// While it is on, anyone who knows the URL could add fake rows or trigger MSG91 messages,
+// so use it for testing only and remove ALLOW_TEST_CONFIRM before going live.
+function testConfirmAllowed(env = process.env) {
+  if (env.RAZORPAY_KEY_SECRET) return false;
+  if (env.NODE_ENV !== "production") return true;
+  return env.ALLOW_TEST_CONFIRM === "true" && String(env.RAZORPAY_KEY_ID || "").startsWith("rzp_test_");
+}
+
 export async function POST(req) {
-  if (process.env.NODE_ENV === "production" || process.env.RAZORPAY_KEY_SECRET) {
+  if (!testConfirmAllowed()) {
     return NextResponse.json({ error: "Not available." }, { status: 404 });
   }
   try {
