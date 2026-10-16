@@ -8,7 +8,7 @@ const EARLY_END = new Date("2026-10-21T00:00:00+05:30").getTime();
 
 export default function BookingForm() {
   const [earlyOpen, setEarlyOpen] = useState(true);
-  const [ticket, setTicket] = useState("regular");
+  const [ticket, setTicket] = useState("couple");
   const [pay, setPay] = useState("deposit");
   const [form, setForm] = useState({ name: "", email: "", phone: "", guest: "", city: "", note: "" });
   const [status, setStatus] = useState("idle");
@@ -117,7 +117,7 @@ export default function BookingForm() {
     <form className="booking" onSubmit={submit}>
       <div className="panel">
         <h2>1. Choose your ticket</h2>
-        <div className="ticket-pick" role="radiogroup" aria-label="Ticket">
+        <div className={`ticket-pick ${tickets.length === 2 ? "two" : ""}`} role="radiogroup" aria-label="Ticket">
           {tickets.map((x) => {
             const disabled = x.id === "early" && !earlyOpen;
             return (

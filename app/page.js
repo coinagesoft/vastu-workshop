@@ -178,13 +178,13 @@ export default function Home() {
           <h2>Choose your <span className="g">ticket</span></h2>
           <div className="tickets">
             {tickets.map((t) => (
-              <div key={t.id} className={`ticket ${t.id === "regular" ? "feature" : ""}`}>
+              <div key={t.id} className={`ticket ${t.id === "early" ? "feature" : ""}`}>
                 <h3>{t.name}</h3>
                 <p className="mrp"><s>{inr(t.mrp)}</s></p>
                 <p className="price">{inr(t.price)}</p>
                 <p className="save-chip">Save {inr(t.mrp - t.price)}</p>
                 <p className="muted" style={{fontSize:"16.8px"}}><P>{t.note || "1 person"}</P></p>
-                <Link href="/book" className={`btn full ${t.id === "regular" ? "coral" : "blue"}`}>Reserve My Seat <Arrow /></Link>
+                <Link href="/book" className={`btn full ${t.id === "early" ? "coral" : "blue"}`}>Reserve My Seat <Arrow /></Link>
               </div>
             ))}
           </div>

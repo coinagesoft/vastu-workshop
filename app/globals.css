@@ -333,3 +333,6 @@ html[data-theme="jal"]{
 .cert-img{margin:0}
 .cert-img img{width:100%;height:auto;border-radius:10px;border:1px solid var(--line);box-shadow:var(--shadow);transform:rotate(-1.2deg)}
 @media (max-width:1000px){.cert-img img{transform:none}}
+
+/* only two tickets: centred pair on desktop */
+@media (min-width:1001px){.tickets{grid-template-columns:repeat(2,minmax(0,400px));justify-content:center}}
