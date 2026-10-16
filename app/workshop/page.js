@@ -49,7 +49,7 @@ export default function Workshop() {
         </div>
       </section>
 
-      <section className="section">
+      {/* <section className="section">
         <div className="wrap">
           <Eyebrow>Testimonials</Eyebrow>
           <h2>What people <span className="g">say</span></h2>
@@ -63,7 +63,7 @@ export default function Workshop() {
           </div>
           <p><Link href="/#testimonials" className="link">Watch video testimonials</Link></p>
         </div>
-      </section>
+      </section> */}
 
       <section className="section tint">
         <div className="wrap narrow">

@@ -2,22 +2,23 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import styles from "./CertGallery.module.css";
 
-// Images live in /public/certificates/. Order = order shown in the scroller.
+// Images live in /public/certificates_new/. Order = order shown in the scroller.
 const CERTS = [
+  { file: "10_Vedhvidhi_Vedic_Vastu.jpg", title: "Vedic Vastu Adhyeta, Level 1", issuer: "Vedhvidhi", year: "2021" },
+  { file: "01_Three_Pillars_Celestial_Secrets.jpg", title: "Celestial Secrets, Certificate of Achievement", issuer: "Three Pillars", year: "2025" },
+  { file: "08_Counselling_Master_Course.jpg", title: "Counselling Master Course, Advanced", issuer: "12-month programme", year: "2024" },
+  { file: "05_IBM_Problem_Solving_Skills.jpg", title: "Problem Solving Skills", issuer: "International Business Management Institute", year: "2020" },
+  { file: "06_Google_Digital_Marketing.jpg", title: "Fundamentals of Digital Marketing", issuer: "Google Digital Garage", year: "2020" },
+  { file: "03_Sahasra_Astro_Vaastu_Visharad.jpg", title: "Astro-Vaastu Visharad Course", issuer: "Sahasra Mahavaastu, Pune", year: "2022" },
+  { file: "07_Sahasra_Remedial_Vaastu_Visharad.jpg", title: "Remedial Vaastu Visharad Course", issuer: "Sahasra Mahavaastu, Pune", year: "2021" },
+  { file: "09_Vastu_Raviraj_Skill_Development.jpg", title: "Vastushastra Skill Development Course", issuer: "Vastu Raviraj, Thane", year: "2021" },
+  { file: "13_MahaVastu_Course.jpg", title: "MahaVastu Course (A grade)", issuer: "Shubha Sanket MahaVastu", year: "2021" },
   
-  { file: "04-vedhvidhi-vedic-vastu-adhyeta.jpg", title: "Vedic Vastu Adhyeta, Level 1", issuer: "Vedhvidhi", year: "2021" },
-  { file: "03-designnopolis-vaastu-shastra.jpg", title: "Vaastu Shastra Course", issuer: "Designnopolis", year: "" },
-  { file: "02-designers-class-residential-design.jpg", title: "Residential Design", issuer: "The Designer's Class", year: "2022" },
-  { file: "12-ikigai-reiki-crystal-healing.jpg", title: "Crystal Healing, Basic Level", issuer: "India Reiki Foundation", year: "2020" },
-  { file: "05-astrolok-numerology.jpg", title: "Learn Numerology, Part 1", issuer: "Astrolok (Udemy)", year: "2020" },
-  { file: "10-harvard-hbx-credentials-of-readiness.jpg", title: "Credentials of Readiness", issuer: "Harvard Business School Online", year: "2018" },
-  { file: "09-pune-university-mba.jpg", title: "MBA, International Business", issuer: "Savitribai Phule Pune University", year: "2016" },
-  { file: "08-highgate-business-management.jpg", title: "PG Diploma, Business Management", issuer: "Highgate Academy, University of Sussex", year: "2010" },
-  { file: "07-ibmi-problem-solving-skills.jpg", title: "Problem Solving Skills", issuer: "International Business Management Institute", year: "2020" },
-  { file: "06-harappa-embracing-change.jpg", title: "Embracing Change", issuer: "Harappa", year: "2020" },
-  { file: "13-pinnacle-vastu-siddhi-course.jpg", title: "Vastu Siddhi Course '24: Vastu Acharya", issuer: "Pinnacle Vastu, Rishikesh", year: "2024" },
-  { file: "11-sahasra-mahavaastu-remedial-vaastu.jpg", title: "Remedial Vaastu Visharad Course", issuer: "Sahasra Mahavaastu, Pune", year: "2021" },
-  { file: "01-shubh-sanket-maha-vastu.jpg", title: "Maha Vastu Course (A grade)", issuer: "Shubhsanket Maha Vastu", year: "2021" },
+  { file: "02_Designers_Class_Interior_Design.jpg", title: "Introduction to Interior Design", issuer: "The Designer's Class", year: "2023" },
+  { file: "11_SPPU_MBA.jpg", title: "Master of Business Administration", issuer: "Savitribai Phule Pune University", year: "2012" },
+  { file: "04_HBX_Business_Analytics.jpg", title: "Business Analytics", issuer: "Harvard Business School (HBX)", year: "2018" },
+  { file: "12_HBS_Leadership_Management.jpg", title: "Specialization in Leadership and Management", issuer: "Harvard Business School Online", year: "2022" },
+  
 ];
 
 export default function CertGallery() {
@@ -104,7 +105,7 @@ export default function CertGallery() {
         {CERTS.map((c, i) => (
           <figure key={c.file} className={styles.cert}>
             <button type="button" className={styles.frame} onClick={() => setOpen(i)} aria-label={`View certificate: ${c.title}`}>
-              <img src={`/certificates/${c.file}`} alt={`${c.title}, ${c.issuer}`} loading="lazy" draggable="false" />
+              <img src={`/certificates_new/${c.file}`} alt={`${c.title}, ${c.issuer}`} loading="lazy" draggable="false" />
             </button>
             <figcaption>
               <strong>{c.title}</strong>
@@ -136,7 +137,7 @@ export default function CertGallery() {
           <button type="button" className={styles.x} onClick={close} aria-label="Close">&times;</button>
           <button type="button" className={`${styles.nav} ${styles.prev}`} onClick={(e) => { e.stopPropagation(); step(-1); }} aria-label="Previous certificate">&larr;</button>
           <figure className={styles.big} onClick={(e) => e.stopPropagation()}>
-            <img src={`/certificates/${cur.file}`} alt={`${cur.title}, ${cur.issuer}`} />
+            <img src={`/certificates_new/${cur.file}`} alt={`${cur.title}, ${cur.issuer}`} />
             <figcaption>{cur.title} &middot; {cur.issuer}{cur.year ? `, ${cur.year}` : ""}</figcaption>
           </figure>
           <button type="button" className={`${styles.nav} ${styles.next}`} onClick={(e) => { e.stopPropagation(); step(1); }} aria-label="Next certificate">&rarr;</button>
