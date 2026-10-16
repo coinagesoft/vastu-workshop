@@ -1,0 +1,44 @@
+/* Same card look the certificates section had originally (white card, gold double-border frame),
+   laid out in one row with a horizontal scrollbar. */
+.wrap{position:relative;margin-top:30px}
+.track{display:flex;gap:26px;padding:2px 2px 16px;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.track::-webkit-scrollbar{display:none}
+
+/* round arrows floating on the left and right edges */
+.arrow{position:absolute;top:42%;z-index:2;width:48px;height:48px;border-radius:50%;border:1.5px solid var(--line);background:#fff;color:var(--ink);font-size:1.25rem;cursor:pointer;box-shadow:0 8px 22px rgba(22,60,120,.16);transition:background .2s,color .2s,opacity .2s}
+.arrow:hover:not(:disabled){background:var(--blue);border-color:var(--blue);color:#fff}
+.arrow:disabled{opacity:0;pointer-events:none}
+.aPrev{left:-14px}.aNext{right:-14px}
+
+/* slim progress line instead of the native scrollbar */
+.progress{position:relative;height:10px;margin-top:2px;background:var(--line);border-radius:99px;cursor:pointer;touch-action:none;user-select:none}
+.progress i{position:absolute;top:0;bottom:0;background:var(--blue);border-radius:99px;cursor:grab}
+.progress:active i{cursor:grabbing}
+
+.cert{flex:0 0 360px;margin:0;background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px}
+
+/* frame: fixed 4:3 box; the image is pinned inside it so tall certificates can never spill out */
+.frame{position:relative;display:block;width:100%;aspect-ratio:4/3;padding:0;background:transparent;border:8px double #D9B45A;border-radius:6px;overflow:hidden;cursor:zoom-in}
+.frame img{position:absolute;inset:6px;width:calc(100% - 12px);height:calc(100% - 12px);object-fit:contain;background:transparent}
+
+.cert figcaption{padding-top:14px;display:grid}
+.cert figcaption strong{color:var(--ink)}
+.cert figcaption span{font-size:.95rem;color:var(--gray)}
+
+/* lightbox */
+.lb{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;gap:12px;padding:20px;background:rgba(15,18,28,.9)}
+.big{margin:0;display:grid;gap:12px;justify-items:center;max-width:min(1100px,86vw)}
+.big img{max-width:100%;max-height:80vh;object-fit:contain;background:#fff;border:8px double #D9B45A;border-radius:6px}
+.big figcaption{color:#fff;font-size:.95rem;text-align:center}
+.x{position:absolute;top:14px;right:18px;border:0;background:transparent;color:#fff;font-size:2.4rem;line-height:1;cursor:pointer}
+.nav{flex:none;width:46px;height:46px;border-radius:50%;border:0;background:rgba(255,255,255,.16);color:#fff;font-size:1.3rem;cursor:pointer}
+.nav:hover{background:rgba(255,255,255,.3)}
+
+@media (max-width:640px){
+  .cert{flex-basis:82vw}
+  .arrow{width:42px;height:42px}.aPrev{left:-6px}.aNext{right:-6px}
+  .lb{padding:12px 8px;gap:4px}
+  .nav{position:absolute;bottom:18px;width:42px;height:42px}
+  .prev{left:calc(50% - 52px)}.next{right:calc(50% - 52px)}
+  .big{max-width:96vw}.big img{max-height:72vh}
+}

@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { tickets, deposit, depositText, event, inr } from "@/lib/data";
 import P from "./Pending";
+import VenueMap from "./VenueMap";
 
 // Early bird stays open through 20 Oct (ends at midnight IST)
 const EARLY_END = new Date("2026-10-21T00:00:00+05:30").getTime();
@@ -165,7 +166,8 @@ export default function BookingForm() {
       </div>
 
       <aside className="panel summary">
-        <h2>Your booking</h2>
+        <VenueMap />
+        <h2 style={{ marginTop: 0 }}>Your booking</h2>
         <dl>
           <dt>Workshop</dt><dd>{event.name}</dd>
           <dt>Date</dt><dd>{event.dateLabel}</dd>

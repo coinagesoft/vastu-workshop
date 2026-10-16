@@ -1,5 +1,7 @@
 import Link from "next/link";
 import ScheduleScroll from "@/components/ScheduleScroll";
+import CertGallery from "@/components/CertGallery";
+import PressFeature from "@/components/PressFeature";
 import Countdown from "@/components/Countdown";
 import CompassWheel from "@/components/CompassWheel";
 import VideoCard from "@/components/VideoCard";
@@ -7,7 +9,7 @@ import * as V from "@/components/VastuIcons";
 import P from "@/components/Pending";
 import { Arrow } from "@/components/Header";
 import {
-  event, problem, learn, agendaNote, teacher, certificates,
+  event, problem, learn, agendaNote, teacher,
   videoTestimonials, tickets, depositText, closing, inr,
 } from "@/lib/data";
 
@@ -125,19 +127,16 @@ export default function Home() {
         <div className="wrap">
           <Eyebrow>Credentials</Eyebrow>
           <h2>Certificates and <span className="g">recognition</span></h2>
-          <div className="certs">
-            {certificates.map((c, i) => (
-              <figure key={i} className="cert">
-                <div className="cert-frame">
-                  {c.image ? <img src={c.image} alt={c.title} /> : <div className="cert-mock"><small>Certificate of Completion</small><b>{c.title}</b><span>{c.issuer}</span><i className="seal" /></div>}
-                </div>
-                <figcaption>
-                  <strong><P>{c.title}</P></strong>
-                  <span><P>{`${c.issuer}, ${c.year}`}</P></span>
-                </figcaption>
-              </figure>
-            ))}
-          </div>
+          <CertGallery />
+        </div>
+      </section>
+
+      {/* PRESS */}
+      <section id="press" className="section tight">
+        <div className="wrap">
+          <Eyebrow>In the news</Eyebrow>
+          <h2>Seen in the <span className="g">press</span></h2>
+          <PressFeature />
         </div>
       </section>
 
@@ -152,7 +151,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* PRICING */}
       {/* COMPLETION CERTIFICATE */}
       <section className="section about">
         <div className="wrap two-col cert-show">
@@ -172,6 +170,7 @@ export default function Home() {
         </div>
       </section>
 
+      {/* PRICING */}
       <section className="section">
         <div className="wrap">
           <Eyebrow>Pricing</Eyebrow>
@@ -183,7 +182,7 @@ export default function Home() {
                 <p className="mrp"><s>{inr(t.mrp)}</s></p>
                 <p className="price">{inr(t.price)}</p>
                 <p className="save-chip">Save {inr(t.mrp - t.price)}</p>
-                <p className="muted" style={{fontSize:"16.8px"}}><P>{t.note || "1 person"}</P></p>
+                <p className="muted" style={{fontSize:"16.8px"}}><P>{t.note || (t.people === 2 ? "2 people" : "1 person")}</P></p>
                 <Link href="/book" className={`btn full ${t.id === "early" ? "coral" : "blue"}`}>Reserve My Seat <Arrow /></Link>
               </div>
             ))}
