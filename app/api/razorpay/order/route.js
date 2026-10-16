@@ -8,11 +8,6 @@ export const runtime = "nodejs";
 // Early bird stays open through 20 Oct 2026 (IST). Keep in sync with components/BookingForm.js
 const EARLY_END = new Date("2026-10-21T00:00:00+05:30").getTime();
 
-// Amount actually charged in Razorpay (rupees), set to 1000 while testing.
-// Set RAZORPAY_CHARGE_OVERRIDE in .env.local / Vercel to change it,
-// or remove the variable to charge the real amount (payNow).
-const CHARGE_OVERRIDE = Number(process.env.RAZORPAY_CHARGE_OVERRIDE || 1000);
-
 // Creates a Razorpay order. The amount is calculated here on the server,
 // so the browser cannot change the price.
 export async function POST(req) {
@@ -33,8 +28,8 @@ export async function POST(req) {
     const payFull = b.pay === "full";
     const payNow = payFull ? t.price : Math.min(deposit, t.price);
 
-    // What Razorpay actually collects (rupees). The UI and the notes still use payNow.
-    const chargeNow = CHARGE_OVERRIDE > 0 ? CHARGE_OVERRIDE : payNow;
+    // What Razorpay collects (rupees): the Rs 1,000 deposit, or the full ticket price when paying in full.
+    const chargeNow = payNow;
 
     // TEST-ONLY fallback: no secret configured, so open Checkout with just the Key ID.
     // No server-side order or signature check happens in this mode.
@@ -42,7 +37,7 @@ export async function POST(req) {
       return NextResponse.json({
         keyId: process.env.RAZORPAY_KEY_ID,
         orderId: null,
-        amount: chargeNow * 100, // paise -> ₹1000
+        amount: chargeNow * 100, // rupees -> paise
         currency: "INR",
         payNow,
         total: t.price,
@@ -54,7 +49,7 @@ export async function POST(req) {
     const order = await rzpRequest("/orders", {
       method: "POST",
       body: JSON.stringify({
-        amount: chargeNow * 100, // paise -> ₹1000
+        amount: chargeNow * 100, // rupees -> paise
         currency: "INR",
         receipt: `vastu_${Date.now()}`.slice(0, 40),
         notes: {
@@ -88,7 +83,7 @@ export async function POST(req) {
     return NextResponse.json({
       keyId,
       orderId: order.id,
-      amount: order.amount, // 100000 paise
+      amount: order.amount, // paise
       currency: order.currency,
       payNow,
       total: t.price,

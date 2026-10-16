@@ -37,7 +37,7 @@ export default function Home() {
             <Countdown to={event.start} />
             <p className="lead">{event.subtitle}</p>
             <div className="actions">
-              <Link href="/book" className="btn coral">Reserve My Seat: {inr(9999)} <Arrow /></Link>
+              <Link href="/book" className="btn coral">Reserve My Seat <Arrow /></Link>
               <a href={waHref} className="btn white" target="_blank" rel="noopener noreferrer">Chat on WhatsApp</a>
             </div>
             <p className="note">Limited to <P>{event.seats}</P> seats. {event.bring}</p>
