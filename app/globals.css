@@ -380,3 +380,9 @@ html[data-theme="jal"]{
 @media (prefers-reduced-motion:reduce){.hs-arrows button{transition:none}}
 .stabs-foot{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:28px}
 .stabs-foot .muted{margin:0}
+
+/* Add to app/globals.css, next to the .pn rule */
+.pt{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.pc{font-size:.78rem;font-weight:600;padding:2px 10px;border-radius:99px;white-space:nowrap;
+    background:color-mix(in srgb,var(--blue) 12%,#fff);color:var(--accent-text)}
+.pick.on .pc{background:var(--blue);color:#fff}

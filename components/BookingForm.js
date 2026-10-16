@@ -120,12 +120,19 @@ export default function BookingForm() {
         <div className={`ticket-pick ${tickets.length === 2 ? "two" : ""}`} role="radiogroup" aria-label="Ticket">
           {tickets.map((x) => {
             const disabled = x.id === "early" && !earlyOpen;
+            // Strip any "For 1 person only ·" prefix still left in lib/data.js notes,
+            // because the head-count now shows as a pill beside the ticket name.
+            const note = (x.note || "").replace(/^\s*for\s+\d+\s+(person|people)(\s+only)?\s*[·,\-–:]?\s*/i, "");
+            const showNote = disabled || (note && !/^\d+\s+(person|people)$/i.test(note));
             return (
               <label key={x.id} className={`pick ${ticket === x.id ? "on" : ""} ${disabled ? "off" : ""}`}>
                 <input type="radio" name="ticket" value={x.id} checked={ticket === x.id} disabled={disabled} onChange={() => setTicket(x.id)} />
-                <span className="pn">{x.name}</span>
+                <span className="pt">
+                  <span className="pn">{x.name}</span>
+                  <span className="pc">{x.people === 2 ? "2 people" : "1 person"}</span>
+                </span>
                 <span className="pp"><s className="pp-old">{inr(x.mrp)}</s> {inr(x.price)}</span>
-                <span className="pm"><P>{disabled ? "Early bird has ended" : x.note || "1 person"}</P></span>
+                {showNote && <span className="pm"><P>{disabled ? "Early bird has ended" : note}</P></span>}
               </label>
             );
           })}
