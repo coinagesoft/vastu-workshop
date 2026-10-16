@@ -1,11 +1,12 @@
 import Link from "next/link";
 import Faq from "@/components/Faq";
+import Schedule from "@/components/Schedule";
 import P from "@/components/Pending";
 import PageBanner from "@/components/PageBanner";
 import IconList, { takeHomeIcons, audienceIcons } from "@/components/IconList";
 import { Arrow } from "@/components/Header";
 import {
-  event, learn, agenda, takeHome, audience, quotes, shortCopy, closing,
+  event, learn, takeHome, audience, quotes, shortCopy, closing,
 } from "@/lib/data";
 
 export const metadata = { title: "Workshop details | DIY Vastu Workshop", description: shortCopy.metaDescription };
@@ -19,7 +20,7 @@ export default function Workshop() {
 
       <section className="section">
         <div className="wrap two-col">
-          <div>
+          <div className="stick-col">
             <Eyebrow>{event.dateLabel}</Eyebrow>
             <h2>What you&apos;ll <span className="g">learn</span></h2>
             <ul className="learn">{learn.map((l) => (<li key={l}>{l}</li>))}</ul>
@@ -27,12 +28,7 @@ export default function Workshop() {
           <div>
             <Eyebrow>Schedule</Eyebrow>
             <h2>How the <span className="g">day works</span></h2>
-            <table className="sched">
-              <thead><tr><th>Session</th><th>What happens</th></tr></thead>
-              <tbody>
-                {agenda.map((a) => (<tr key={a.session}><td>{a.session}</td><td>{a.what}</td></tr>))}
-              </tbody>
-            </table>
+            <Schedule />
           </div>
         </div>
       </section>

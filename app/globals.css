@@ -336,3 +336,47 @@ html[data-theme="jal"]{
 
 /* only two tickets: centred pair on desktop */
 @media (min-width:1001px){.tickets{grid-template-columns:repeat(2,minmax(0,400px));justify-content:center}}
+
+/* full-day schedule (home + workshop page) */
+.schedule-title{font-family:var(--f-head),system-ui,sans-serif;font-size:1.5rem;margin:0 0 18px;color:var(--ink)}
+.schedule-list{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.schedule-list li{position:relative;padding:18px 22px 18px 74px;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 6px 20px rgba(22,60,120,.05)}
+.st-num{position:absolute;left:22px;top:18px;width:36px;height:36px;border-radius:50%;background:var(--grad2);color:#fff;font-weight:700;font-size:.95rem;display:grid;place-items:center}
+.st-time{display:block;font-size:.9rem;font-weight:600;color:var(--blue);margin-bottom:2px}
+.st-body h4{margin:0;font-family:var(--f-head),system-ui,sans-serif;font-size:1.12rem;font-weight:600;color:var(--ink);line-height:1.4}
+.st-body p{margin:6px 0 0;color:var(--gray);font-size:1rem;line-height:1.6;max-width:none}
+.schedule-list li.rest{background:color-mix(in srgb,var(--green) 9%,#fff);border-style:dashed;box-shadow:none}
+.schedule-list li.rest .st-num{background:#fff;color:var(--blue);border:2px solid var(--blue)}
+@media (min-width:1001px){
+  .schedule.wide .schedule-list{display:block;column-count:2;column-gap:28px}
+  .schedule.wide .schedule-list li{break-inside:avoid;margin-bottom:12px}
+  .stick-col{position:sticky;top:120px;align-self:start}
+}
+@media (max-width:560px){.schedule-list li{padding:16px 16px 16px 62px}.st-num{left:14px;top:16px;width:32px;height:32px}}
+
+/* home page schedule: horizontal scrolling timeline */
+.hs-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:24px 0 8px}
+.hs-title{font-family:var(--f-head),system-ui,sans-serif;font-size:1.4rem;font-weight:600;color:var(--ink);margin:0}
+.hs-arrows{display:flex;gap:10px}
+.hs-arrows button{width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--blue);font-size:1.3rem;line-height:1;cursor:pointer;box-shadow:0 6px 16px rgba(22,60,120,.08);transition:background .15s,color .15s}
+.hs-arrows button:hover:not(:disabled){background:var(--grad2);color:#fff;border-color:transparent}
+.hs-arrows button:disabled{opacity:.4;cursor:default}
+.hs-track{overflow-x:auto;scroll-snap-type:x proximity;padding:8px 4px 26px;margin-inline:-4px;scrollbar-width:thin;scrollbar-color:var(--blue) var(--line);outline-offset:4px}
+.htl{list-style:none;margin:0;padding:0;display:flex;gap:20px;width:max-content}
+.htl li{position:relative;flex:none;width:300px;display:flex;flex-direction:column;padding-top:58px;scroll-snap-align:start}
+.ht-time{position:absolute;top:0;left:0;font-weight:700;color:var(--blue);font-size:1rem;white-space:nowrap}
+.ht-dot{position:absolute;top:34px;left:0;width:16px;height:16px;border-radius:50%;background:var(--grad2);box-shadow:0 0 0 5px color-mix(in srgb,var(--blue) 16%,#fff);z-index:1}
+.htl li::after{content:"";position:absolute;top:41px;left:16px;right:-20px;height:2px;background:var(--line)}
+.htl li:last-child::after{display:none}
+.ht-card{position:relative;flex:1;background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 22px 22px;box-shadow:0 6px 20px rgba(22,60,120,.05)}
+.ht-n{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:color-mix(in srgb,var(--blue) 12%,#fff);color:var(--blue);font-weight:700;font-size:.9rem;margin-bottom:10px}
+.ht-card h4{margin:0;font-family:var(--f-head),system-ui,sans-serif;font-size:1.12rem;font-weight:600;color:var(--ink);line-height:1.4}
+.ht-card p{margin:8px 0 0;color:var(--gray);font-size:.97rem;line-height:1.6;max-width:none}
+.htl li.rest .ht-dot{background:#fff;border:2px solid var(--blue);box-shadow:none}
+.htl li.rest .ht-card{background:color-mix(in srgb,var(--green) 9%,#fff);border-style:dashed}
+.htl li.rest .ht-n{background:#fff;color:var(--accent-text)}
+.hs-hint{margin:0;font-size:.9rem;color:var(--gray)}
+@media (max-width:560px){.htl li{width:260px}.hs-arrows button{width:40px;height:40px}}
+@media (prefers-reduced-motion:reduce){.hs-arrows button{transition:none}}
+.stabs-foot{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:28px}
+.stabs-foot .muted{margin:0}

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import ScheduleScroll from "@/components/ScheduleScroll";
 import Countdown from "@/components/Countdown";
 import CompassWheel from "@/components/CompassWheel";
 import VideoCard from "@/components/VideoCard";
@@ -6,7 +7,7 @@ import * as V from "@/components/VastuIcons";
 import P from "@/components/Pending";
 import { Arrow } from "@/components/Header";
 import {
-  event, problem, learn, agenda, agendaNote, teacher, certificates,
+  event, problem, learn, agendaNote, teacher, certificates,
   videoTestimonials, tickets, depositText, closing, inr,
 } from "@/lib/data";
 
@@ -94,12 +95,11 @@ export default function Home() {
         <div className="wrap">
           <Eyebrow>Schedule</Eyebrow>
           <h2>How the <span className="g">day works</span></h2>
-          <ol className="timeline">
-            {agenda.map((a) => (
-              <li key={a.session}><h3>{a.session}</h3><p>{a.what}</p></li>
-            ))}
-          </ol>
-          <p className="muted"><P>{agendaNote}</P></p>
+          <ScheduleScroll />
+          <div className="stabs-foot">
+            <p className="muted"><P>{agendaNote}</P></p>
+            <Link href="/book" className="btn coral">Reserve My Seat <Arrow /></Link>
+          </div>
         </div>
       </section>
 
