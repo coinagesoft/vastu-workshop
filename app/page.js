@@ -60,9 +60,9 @@ export default function Home() {
           </div>
           <div className="stat-list">
             {[
-              ["1", "day, hands-on", statIcons[0], "green"],
-              ["16", "zones explained", statIcons[1], "blue"],
-              ["5", "elements in your space", statIcons[2], "coral"],
+              ["1", "Day, Hands-on", statIcons[0], "green"],
+              ["16", "Zones explained", statIcons[1], "blue"],
+              ["5", "Elements in your space", statIcons[2], "coral"],
             ].map(([n, label, icon, color]) => (
               <div key={label} className="stat-card">
                 <span className={`ico ${color}`}>{icon}</span>
@@ -183,7 +183,7 @@ export default function Home() {
                 <p className="mrp"><s>{inr(t.mrp)}</s></p>
                 <p className="price">{inr(t.price)}</p>
                 <p className="save-chip">Save {inr(t.mrp - t.price)}</p>
-                <p className="muted"><P>{t.note || "1 person"}</P></p>
+                <p className="muted" style={{fontSize:"16.8px"}}><P>{t.note || "1 person"}</P></p>
                 <Link href="/book" className={`btn full ${t.id === "regular" ? "coral" : "blue"}`}>Reserve My Seat <Arrow /></Link>
               </div>
             ))}

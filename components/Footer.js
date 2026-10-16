@@ -22,9 +22,10 @@ const socials = [
 const css = `
 .fx{position:relative;background:var(--grad2);color:#fff;overflow:hidden;font-family:var(--f-body),system-ui,sans-serif}
 .fx::before{content:"";position:absolute;inset:0;opacity:.35;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='500' fill='none' stroke='white' stroke-opacity='.22'%3E%3Cpath d='M-20 380C150 250 280 470 460 330S720 200 920 300'/%3E%3Cpath d='M-20 330C150 200 280 420 460 280S720 150 920 250'/%3E%3Cpath d='M-20 280C150 150 280 370 460 230S720 100 920 200'/%3E%3C/svg%3E");background-size:cover}
-.fx-in{position:relative;width:min(100% - 40px,1100px);margin-inline:auto;padding:64px 0 40px}
+.fx-in{position:relative;width:min(100% - 40px,var(--max));margin-inline:auto;padding:64px 0 40px}
 .fx-top{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-bottom:30px;border-bottom:1px solid #ffffff40}
-.fx-logo img{height:64px;width:auto;max-width:100%}
+.fx-logo img{height:60px;width:auto;max-width:220px;object-fit:contain}
+@media (max-width:1000px){.fx-logo img{height:46px}}
 .fx-logo{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-family:var(--f-head),system-ui,sans-serif;font-weight:700;font-size:1.7rem;letter-spacing:-.02em}
 .fx-follow{display:flex;align-items:center;gap:12px;font-weight:600;font-size:.95rem}
 .fx-soc{display:flex;gap:8px}

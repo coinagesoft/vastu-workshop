@@ -7,7 +7,7 @@ export const audienceIcons = [V.familyHome(24), V.key(24), V.office(24), V.draft
 
 export default function IconList({ items }) {
   return (
-    <ul className="learn small">
+    <ul className="learn small icon-list">
       {items.map((t) => (
         <li key={t}>{t}</li>
       ))}

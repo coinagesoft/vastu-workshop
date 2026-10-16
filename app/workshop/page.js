@@ -48,7 +48,7 @@ export default function Workshop() {
             <Eyebrow>Audience</Eyebrow>
             <h2>Who it&apos;s <span className="g">for</span></h2>
             <IconList items={audience} icons={audienceIcons} />
-            <p><strong>No prior knowledge needed.</strong></p>
+            <p className="no-prior"><strong>No prior knowledge needed.</strong></p>
           </div>
         </div>
       </section>
