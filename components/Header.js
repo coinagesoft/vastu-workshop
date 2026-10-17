@@ -9,7 +9,7 @@ const links = [
   { href: "/workshop", label: "Workshop" },
   { href: "/#certificates", label: "Certificates" },
   { href: "/#testimonials", label: "Testimonials" },
-  { href: "/book", label: "Book Seat" },
+  // { href: "/book", label: "Book a Seat" },
 ];
 
 export function Arrow() {
@@ -29,6 +29,7 @@ export default function Header() {
         <Link href="/" className="brand" onClick={() => setOpen(false)}>
           <img src={logo} alt="Vedratna" className="brand-logo" />
         </Link>
+        <Link href="/book" className="btn blue bar-cta">Book a Seat <Arrow /></Link>
         <button className="menu-btn" aria-expanded={open} aria-label="Menu" onClick={() => setOpen(!open)}>
           <span /><span /><span />
         </button>
@@ -38,7 +39,7 @@ export default function Header() {
               {l.label}
             </Link>
           ))}
-          <Link href="/book" className="btn blue" onClick={() => setOpen(false)}>Book Seat <Arrow /></Link>
+          <Link href="/book" className="btn blue nav-cta" onClick={() => setOpen(false)}>Book a Seat <Arrow /></Link>
         </nav>
       </div>
     </header>
